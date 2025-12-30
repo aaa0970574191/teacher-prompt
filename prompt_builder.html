@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>教師出題 Prompt 模板（四科通用）</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1b31;
+      --panel2:#0c162a;
+      --text:#eaf0ff;
+      --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10);
+      --brand:#7c5cff;
+      --brand2:#2be7c6;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% 0%, rgba(124,92,255,.25), transparent 60%),
+        radial-gradient(1100px 700px at 90% 20%, rgba(43,231,198,.18), transparent 55%),
+        radial-gradient(900px 600px at 50% 110%, rgba(255,204,102,.10), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+    .wrap{max-width:1150px;margin:0 auto;padding:28px 18px 60px}
+    header{
+      display:flex;gap:14px;align-items:center;justify-content:space-between;
+      padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      position:sticky;top:12px;backdrop-filter: blur(10px);
+      z-index:5;
+    }
+    .title{display:flex;flex-direction:column;gap:4px}
+    .title h1{font-size:16px;margin:0;letter-spacing:.5px}
+    .title .sub{font-size:12px;color:var(--muted);line-height:1.4}
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:999px;
+      background: rgba(124,92,255,.12);
+      border:1px solid rgba(124,92,255,.25);
+      color: var(--text);
+      font-size:12px;
+    }
+    .grid{margin-top:18px;display:grid;grid-template-columns: 1.05fr .95fr;gap:16px}
+    @media (max-width: 980px){.grid{grid-template-columns:1fr}header{position:relative;top:auto}}
+    .card{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 16px;border-bottom:1px solid var(--line);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background: linear-gradient(180deg, rgba(15,27,49,.85), rgba(12,22,42,.85));
+    }
+    .card .hd b{font-size:13px}
+    .card .bd{padding:14px 16px}
+    .row{display:grid;grid-template-columns: 1fr 1fr;gap:10px}
+    @media (max-width: 560px){ .row{grid-template-columns:1fr} }
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input, select, textarea{
+      width:100%;padding:10px 12px;border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(11,18,32,.55);color: var(--text);outline:none;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.12);
+    }
+    textarea{min-height: 360px; resize: vertical; line-height:1.45}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-size:12px;color:var(--text);cursor:pointer; user-select:none;
+      transition: .15s ease;
+    }
+    .tab.active{
+      border-color: rgba(43,231,198,.55);
+      background: rgba(43,231,198,.12);
+    }
+    .hint{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5}
+    .section{margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.14)}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    button{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: .15s ease;
+      font-weight:600;
+      font-size:12px;
+    }
+    button.primary{
+      border-color: rgba(124,92,255,.55);
+      background: linear-gradient(180deg, rgba(124,92,255,.35), rgba(124,92,255,.18));
+    }
+    button.primary:hover{transform: translateY(-1px)}
+    button.ghost:hover{background: rgba(255,255,255,.08)}
+    .badge{
+      font-size:11px;color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px 8px;border-radius:999px;
+      background: rgba(255,255,255,.03);
+    }
+    .toast{
+      position: fixed;left: 50%;bottom: 18px;transform: translateX(-50%);
+      background: rgba(15,27,49,.95);
+      border:1px solid rgba(43,231,198,.35);
+      box-shadow: var(--shadow);
+      padding:10px 12px;border-radius: 999px;font-size: 12px;
+      color: var(--text);display:none;z-index: 10;
+    }
+
+    /* Question block */
+    .qblock{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding:12px 12px;
+      margin-top:10px;
+    }
+    .qhead{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .qtitle{font-size:12px;color:var(--text)}
+    .qactions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .qactions button{padding:8px 10px;border-radius:12px}
+    .qgrid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;margin-top:10px}
+    @media (max-width: 560px){ .qgrid{grid-template-columns:1fr} }
+    .qgrid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    @media (max-width: 560px){ .qgrid2{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>教師出題 Prompt 模板（四科通用）</h1>
+        <div class="sub">可新增題組｜題組可上移/下移/複製/刪除｜配對題可調（題數/選項池）｜閱讀題組可調（題組數/每組題數/字數/比例）｜一鍵生成＋複製 Prompt</div>
+      </div>
+      <div class="pill"><span>Theme</span><span style="color:var(--brand2);font-weight:700">Aurora Teacher</span></div>
+    </header>
+
+    <div class="grid">
+      <!-- Left -->
+      <div class="card">
+        <div class="hd">
+          <b>設定面板</b>
+          <span class="badge" id="summaryBadge">科目：國語</span>
+        </div>
+        <div class="bd">
+          <div class="tabs" id="subjectTabs">
+            <div class="tab active" data-subject="國語">國語</div>
+            <div class="tab" data-subject="數學">數學</div>
+            <div class="tab" data-subject="社會">社會</div>
+            <div class="tab" data-subject="自然">自然</div>
+          </div>
+
+          <div class="section">
+            <div class="row">
+              <div>
+                <label>年級</label>
+                <select id="grade">
+                  <option>三年級</option><option>四年級</option><option>五年級</option><option selected>六年級</option>
+                </select>
+              </div>
+              <div>
+                <label>考試時間（分鐘）</label>
+                <input id="minutes" type="number" min="5" max="120" value="40">
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px">
+              <div>
+                <label>難度（整份卷的整體難度）</label>
+                <select id="overallDifficulty">
+                  <option>易</option><option selected>中</option><option>難</option>
+                </select>
+              </div>
+              <div>
+                <label>版本/備註（可空白）</label>
+                <input id="publisher" placeholder="例如：康軒 / 翰林 / 南一">
+              </div>
+            </div>
+
+            <div style="margin-top:10px">
+              <label>本份測驗的大主題（可空白）</label>
+              <input id="examTopic" placeholder="例如：期末範圍 / 單元複習 / 自訂">
+            </div>
+          </div>
+
+          <div class="section">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <b style="font-size:13px">題組清單</b>
+              <span class="badge">可新增/複製/移動/刪除</span>
+            </div>
+            <div id="blocks"></div>
+
+            <div class="btns">
+              <button class="ghost" id="btnAdd">＋新增題組</button>
+              <button class="ghost" id="btnLoadSample">套用範例（社會）</button>
+            </div>
+
+            <div class="hint">
+              題型支援：選擇、填充、是非、簡答、計算、應用、配對（題數/選項池）、閱讀題組（題組數/字數/比例）。
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="btns">
+              <button class="primary" id="btnGenerate">生成 Prompt</button>
+              <button class="ghost" id="btnCopy">一鍵複製</button>
+              <button class="ghost" id="btnReset">重設（保留科目）</button>
+            </div>
+            <div class="hint">
+              生成後，右側會是一段「可直接貼給 NotebookLM/Gemini/ChatGPT」的命題指令。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="card">
+        <div class="hd">
+          <b>輸出 Prompt</b>
+          <span class="badge" id="countBadge">總題數：—</span>
+        </div>
+        <div class="bd">
+          <textarea id="output" placeholder="按「生成 Prompt」後會出現在這裡…"></textarea>
+          <div class="hint">
+            Prompt 會固定要求：繁體中文、避免錯字、不要來源符號、產出「學生卷＋老師詳解」。<br/>
+            如果你要固定版面（像你貼的那種：標題/班級座號姓名/每題配分/分隔線），我也能把這些選項加進左側做成勾選。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">已複製到剪貼簿 ✅</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+
+  // Subject tabs
+  let currentSubject = "國語";
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.addEventListener("click", ()=>{
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+      tab.classList.add("active");
+      currentSubject = tab.dataset.subject;
+      $("summaryBadge").textContent = `科目：${currentSubject}`;
+    });
+  });
+
+  function toast(msg){
+    const t = $("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(()=> t.style.display = "none", 1400);
+  }
+
+  function clampTripletTo100(a,b,c){
+    const s = a+b+c;
+    if (s <= 0) return [30,40,30];
+    const aa = Math.round(a*100/s);
+    const bb = Math.round(b*100/s);
+    const cc = 100 - aa - bb;
+    return [aa,bb,cc];
+  }
+
+  function makeBlock(data={}){
+    const id = "b" + Math.random().toString(16).slice(2);
+    const div = document.createElement("div");
+    div.className = "qblock";
+    div.dataset.bid = id;
+
+    const diffOptions = ["易","中","難","困難"];
+
+    div.innerHTML = `
+      <div class="qhead">
+        <div class="qtitle">題組</div>
+        <div class="qactions">
+          <button class="ghost" data-action="up">↑</button>
+          <button class="ghost" data-action="down">↓</button>
+          <button class="ghost" data-action="clone">複製</button>
+          <button class="ghost" data-action="remove">刪除</button>
+        </div>
+      </div>
+
+      <div class="qgrid">
+        <div>
+          <label>單元/範圍（題組主題）</label>
+          <input data-k="unit" placeholder="例如：分數四則運算 / 鄭氏王朝 / 生態系" value="${data.unit||""}">
+        </div>
+        <div>
+          <label>難度（本題組）</label>
+          <select data-k="difficulty">
+            ${diffOptions.map(x=>`<option ${data.difficulty===x?"selected":""}>${x}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+
+      <div class="qgrid2">
+        <div>
+          <label>題型</label>
+          <select data-k="type">
+            ${["選擇題","填充題","是非題","簡答題","計算題","生活應用題","配對題","閱讀題組"].map(x=>`<option ${data.type===x?"selected":""}>${x}</option>`).join("")}
+          </select>
+        </div>
+        <div>
+          <label>題數（一般題型用）</label>
+          <input data-k="count" type="number" min="0" value="${data.count ?? 2}">
+        </div>
+      </div>
+
+      <div class="qgrid2" data-area="match" style="display:none">
+        <div>
+          <label>配對題：題目數</label>
+          <input data-k="matchCount" type="number" min="0" value="${data.matchCount ?? 5}">
+        </div>
+        <div>
+          <label>配對題：選項池總數</label>
+          <input data-k="matchPool" type="number" min="0" value="${data.matchPool ?? 8}">
+        </div>
+      </div>
+
+      <div class="qgrid2" data-area="reading" style="display:none">
+        <div>
+          <label>閱讀題組：題組數 sets</label>
+          <input data-k="readingSets" type="number" min="1" value="${data.readingSets ?? 1}">
+        </div>
+        <div>
+          <label>閱讀題組：每組題數 q_per_set</label>
+          <input data-k="readingQps" type="number" min="1" value="${data.readingQps ?? 5}">
+        </div>
+      </div>
+
+      <div class="qgrid2" data-area="reading2" style="display:none">
+        <div>
+          <label>每篇文章字數 words</label>
+          <input data-k="readingWords" type="number" min="100" value="${data.readingWords ?? 450}">
+        </div>
+        <div>
+          <label>文體（可空白）</label>
+          <input data-k="readingGenre" placeholder="例：說明文/記敘文/議論文/故事" value="${data.readingGenre || ""}">
+        </div>
+      </div>
+
+      <div class="qgrid2" data-area="reading3" style="display:none">
+        <div>
+          <label>比例：字面理解%</label>
+          <input data-k="ratioLit" type="number" min="0" value="${data.ratioLit ?? 30}">
+        </div>
+        <div>
+          <label>比例：推論理解%</label>
+          <input data-k="ratioInf" type="number" min="0" value="${data.ratioInf ?? 40}">
+        </div>
+      </div>
+
+      <div class="qgrid2" data-area="reading4" style="display:none">
+        <div>
+          <label>比例：統整評鑑%</label>
+          <input data-k="ratioSyn" type="number" min="0" value="${data.ratioSyn ?? 30}">
+        </div>
+        <div>
+          <label>（提示）比例會自動正規化成100%</label>
+          <input value="✅ 會自動調整" disabled>
+        </div>
+      </div>
+    `;
+
+    // Toggle areas by type
+    const typeSel = div.querySelector('select[data-k="type"]');
+    const areaMatch = div.querySelector('[data-area="match"]');
+    const areaReading = div.querySelector('[data-area="reading"]');
+    const areaReading2 = div.querySelector('[data-area="reading2"]');
+    const areaReading3 = div.querySelector('[data-area="reading3"]');
+    const areaReading4 = div.querySelector('[data-area="reading4"]');
+
+    function refreshAreas(){
+      const t = typeSel.value;
+      const isMatch = (t === "配對題");
+      const isReading = (t === "閱讀題組");
+
+      areaMatch.style.display = isMatch ? "" : "none";
+      areaReading.style.display = isReading ? "" : "none";
+      areaReading2.style.display = isReading ? "" : "none";
+      areaReading3.style.display = isReading ? "" : "none";
+      areaReading4.style.display = isReading ? "" : "none";
+    }
+    typeSel.addEventListener("change", refreshAreas);
+    refreshAreas();
+
+    // Helpers inside block
+    function getBlockDataLocal(){
+      return getBlockData(div);
+    }
+
+    // Actions: up/down/clone/remove
+    div.querySelector('[data-action="up"]').addEventListener("click", ()=>{
+      const prev = div.previousElementSibling;
+      if (prev) prev.before(div);
+    });
+
+    div.querySelector('[data-action="down"]').addEventListener("click", ()=>{
+      const next = div.nextElementSibling;
+      if (next) next.after(div);
+    });
+
+    div.querySelector('[data-action="clone"]').addEventListener("click", ()=>{
+      const dataNow = getBlockDataLocal();
+      const newBlock = makeBlock(dataNow);
+      div.after(newBlock);
+    });
+
+    div.querySelector('[data-action="remove"]').addEventListener("click", ()=>{
+      div.remove();
+    });
+
+    return div;
+  }
+
+  function addBlock(data){
+    $("blocks").appendChild(makeBlock(data));
+  }
+
+  function getBlockData(div){
+    const get = (k) => div.querySelector(`[data-k="${k}"]`);
+    const unit = (get("unit")?.value || "").trim();
+    const difficulty = get("difficulty")?.value || "中";
+    const type = get("type")?.value || "選擇題";
+
+    const count = parseInt(get("count")?.value, 10) || 0;
+
+    const matchCount = parseInt(get("matchCount")?.value, 10) || 0;
+    let matchPool = parseInt(get("matchPool")?.value, 10) || 0;
+
+    const readingSets = parseInt(get("readingSets")?.value, 10) || 0;
+    const readingQps = parseInt(get("readingQps")?.value, 10) || 0;
+    const readingWords = parseInt(get("readingWords")?.value, 10) || 450;
+    const readingGenre = (get("readingGenre")?.value || "").trim();
+
+    const ratioLit0 = parseInt(get("ratioLit")?.value, 10) || 0;
+    const ratioInf0 = parseInt(get("ratioInf")?.value, 10) || 0;
+    const ratioSyn0 = parseInt(get("ratioSyn")?.value, 10) || 0;
+    const [ratioLit, ratioInf, ratioSyn] = clampTripletTo100(ratioLit0, ratioInf0, ratioSyn0);
+
+    if (type === "配對題"){
+      if (!matchPool || matchPool < matchCount) matchPool = matchCount;
+    }
+
+    return {
+      unit, difficulty, type, count,
+      matchCount, matchPool,
+      readingSets, readingQps, readingWords, readingGenre,
+      ratioLit, ratioInf, ratioSyn
+    };
+  }
+
+  const subjectHints = {
+    "國語": [
+      "國語題避免偏難文言；題幹語句自然、貼近課本用語",
+      "若有閱讀題組：解析需標出段落/關鍵句，並說明推論依據",
+      "可涵蓋：字詞解釋、修辭、段落大意、推論、統整、句型改寫"
+    ],
+    "數學": [
+      "計算題務必要求列式與步驟；答案需含單位（若有）",
+      "數字設計避免過度刁鑽；同概念由易到難安排",
+      "生活應用題情境貼近生活，符合年級程度"
+    ],
+    "社會": [
+      "用詞以臺灣課本習慣；可加入因果、時間序、史料判讀",
+      "配對題可用：人物↔事蹟、年代↔事件、地名↔特色/政策",
+      "避免模稜兩可、避免超出課本範圍的冷知識"
+    ],
+    "自然": [
+      "強調觀察與概念理解；可加入變因控制、因果推論",
+      "配對題可用：器材↔用途、現象↔原因、名詞↔定義",
+      "題幹清楚，不混淆概念層級（例：現象/原理/例子）"
+    ]
+  };
+
+  function buildPrompt(){
+    const grade = $("grade").value;
+    const minutes = parseInt($("minutes").value, 10) || 40;
+    const overallDifficulty = $("overallDifficulty").value;
+    const publisher = ($("publisher").value || "").trim();
+    const examTopic = ($("examTopic").value || "").trim();
+
+    const blocks = Array.from($("blocks").querySelectorAll(".qblock"))
+      .map(getBlockData)
+      .filter(b => (b.unit && b.unit.length>0) || b.type === "閱讀題組" || b.type === "配對題");
+
+    let typeLines = [];
+    let total = 0;
+
+    blocks.forEach((b, idx)=>{
+      const n = idx + 1;
+      const unitText = b.unit ? b.unit : "（請填單元/範圍）";
+
+      if (b.type === "配對題"){
+        const c = b.matchCount || 0;
+        const pool = b.matchPool || c;
+        typeLines.push(
+          `${n}. 配對題（${c}題｜選項池${pool}個｜${b.difficulty}）\n   單元：${unitText}\n   規格：題目與選項需一對一可判定；選項池可含合理干擾選項，但不得多解。`
+        );
+        total += c;
+        return;
+      }
+
+      if (b.type === "閱讀題組"){
+        const sets = b.readingSets || 1;
+        const qps = b.readingQps || 5;
+        const words = b.readingWords || 450;
+        const rTotal = sets * qps;
+        const genrePart = b.readingGenre ? `｜文體：${b.readingGenre}` : "";
+        typeLines.push(
+          `${n}. 閱讀題組（${sets}組×每組${qps}題＝${rTotal}題｜每篇約${words}字｜比例：字面${b.ratioLit}%/推論${b.ratioInf}%/統整${b.ratioSyn}%${genrePart}｜${b.difficulty}）\n   主題：${unitText}\n   規格：每組須含文章→題目→答案與解析；解析需指出對應段落/關鍵句與推論依據。`
+        );
+        total += rTotal;
+        return;
+      }
+
+      const c = b.count || 0;
+      typeLines.push(
+        `${n}. ${b.type}（${c}題｜${b.difficulty}）\n   單元：${unitText}`
+      );
+      total += c;
+    });
+
+    $("countBadge").textContent = `總題數：${total || "—"}`;
+
+    const pubLine = publisher ? `【版本/備註】${publisher}\n` : "";
+    const examTopicLine = examTopic ? `【本份測驗主題】${examTopic}\n` : "";
+    const hints = (subjectHints[currentSubject] || []).map(x=>`- ${x}`).join("\n");
+
+    const prompt =
+`你是一位資深國小教師與命題者，請使用繁體中文產出一份「${currentSubject}測驗卷」。
+
+【對象】${grade}
+【科目】${currentSubject}
+${pubLine}${examTopicLine}【課綱】臺灣108課綱
+【整體難度】${overallDifficulty}
+【時間】${minutes}分鐘
+【總題數】${total}題（閱讀文章字數不計入總題數）
+
+【固定限制（非常重要）】
+- 避免簡體字、避免中國用語、避免錯字與用詞不當
+- 不要輸出任何來源符號/引用註記/註腳/參考文獻格式
+- 禁止使用「根據來源資料」「資料顯示」「文獻指出」等報告式語言（老師詳解請用「因為…所以…」的課堂講解口吻）
+- 題幹清楚、不出文字陷阱；同一題型內由易到難
+
+【本次測驗題型配置】（依序出題）
+${typeLines.length ? typeLines.join("\n\n") : "（尚未設定題組：請新增題組並填寫單元/題型/題數）"}
+
+【科目提醒】
+${hints}
+
+【輸出格式（請嚴格照做）】
+1) 文件一：學生考卷
+   - 僅題目，不要答案與提示
+   - 每題前方都要保留作答空格：（　　）
+   - 直列清單，適合列印
+2) 文件二：老師詳解
+   - 題目與學生卷完全一致（題號、題幹、選項）
+   - 每題包含：正確答案＋完整詳解（白話清楚，1–2句即可）＋易錯解析（至少1點）
+   - 若為閱讀題組：每題解析需指出對應段落/關鍵句與推論依據
+`;
+
+    return prompt;
+  }
+
+  // Buttons
+  $("btnGenerate").addEventListener("click", ()=>{
+    $("output").value = buildPrompt();
+    toast("Prompt 已生成 ✅");
+  });
+
+  $("btnCopy").addEventListener("click", async ()=>{
+    const text = ($("output").value || "").trim();
+    if (!text){ toast("先生成 Prompt 再複製喔～"); return; }
+    try{
+      await navigator.clipboard.writeText(text);
+      toast("已複製到剪貼簿 ✅");
+    }catch(e){
+      $("output").focus(); $("output").select();
+      document.execCommand("copy");
+      toast("已複製（fallback）✅");
+    }
+  });
+
+  $("btnReset").addEventListener("click", ()=>{
+    const keepSubject = currentSubject;
+    $("minutes").value = 40;
+    $("overallDifficulty").value = "中";
+    $("publisher").value = "";
+    $("examTopic").value = "";
+    $("blocks").innerHTML = "";
+    addBlock({unit:"", type:"選擇題", count:10, difficulty:"中"});
+    $("output").value = "";
+    $("countBadge").textContent = "總題數：—";
+    $("summaryBadge").textContent = `科目：${keepSubject}`;
+    toast("已重設 ✅");
+  });
+
+  $("btnAdd").addEventListener("click", ()=>{
+    addBlock({unit:"", type:"選擇題", count:2, difficulty:"中"});
+  });
+
+  // Load sample (your previous social example)
+  $("btnLoadSample").addEventListener("click", ()=>{
+    currentSubject = "社會";
+    document.querySelectorAll(".tab").forEach(t=>{
+      t.classList.toggle("active", t.dataset.subject === "社會");
+    });
+    $("summaryBadge").textContent = "科目：社會";
+
+    $("blocks").innerHTML = "";
+    addBlock({unit:"舊石器時代 與 鄭氏王朝", type:"是非題", count:2, difficulty:"困難"});
+    addBlock({unit:"臺灣原住民族", type:"選擇題", count:2, difficulty:"中"});
+    addBlock({unit:"金屬器時代 與 鄭氏王朝", type:"填充題", count:2, difficulty:"中"});
+    addBlock({unit:"荷蘭人與西班牙人在臺的經營", type:"配對題", difficulty:"中", matchCount:5, matchPool:4});
+    toast("已套用社會範例 ✅");
+  });
+
+  // Init
+  addBlock({unit:"", type:"選擇題", count:10, difficulty:"中"});
+</script>
+</body>
+</html>
