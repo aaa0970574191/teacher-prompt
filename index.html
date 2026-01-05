@@ -3,287 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>教師出題 Prompt 模板｜Aurora 極光版</title>
+  <title>教師出題 Prompt 模板｜Aurora v6.3 專業全功能版</title>
   <style>
     :root{
-      /* --- 核心配色：深邃極光 (Deep Aurora) --- */
-      --bg: #0f172a;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      
-      /* 品牌色：智慧紫 與 靈動青 */
-      --brand: #8b5cf6;
-      --brand-glow: rgba(139, 92, 246, 0.5);
-      --accent: #2dd4bf;
-      --accent-glow: rgba(45, 212, 191, 0.5);
-
-      /* 玻璃擬態參數 (Glassmorphism) */
-      --glass-bg: rgba(30, 41, 59, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-blur: 20px;
-      --radius: 24px;
-      
-      /* 陰影層次 */
-      --shadow-lg: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
-      --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.2);
+      --bg: #0f172a; --text: #f1f5f9; --muted: #94a3b8;
+      --brand: #8b5cf6; --brand-glow: rgba(139, 92, 246, 0.5);
+      --accent: #2dd4bf; --accent-glow: rgba(45, 212, 191, 0.5);
+      --glass-bg: rgba(30, 41, 59, 0.7); --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: 20px; --radius: 24px; --shadow-lg: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
     }
-
     * { box-sizing: border-box; }
-
     body {
-      margin: 0;
-      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
-      color: var(--text);
-      background-color: var(--bg);
-      min-height: 100vh;
-      line-height: 1.6;
-      overflow-x: hidden;
-      
-      /* --- 動態極光背景 --- */
-      background-image: 
-        radial-gradient(circle at 10% 10%, rgba(139, 92, 246, 0.15), transparent 40%),
-        radial-gradient(circle at 90% 20%, rgba(45, 212, 191, 0.15), transparent 40%),
-        radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.1), transparent 50%);
-      background-size: 200% 200%;
-      animation: auroraMove 15s ease infinite alternate;
+      margin: 0; font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text); background-color: var(--bg); min-height: 100vh;
+      background-image: radial-gradient(circle at 10% 10%, rgba(139, 92, 246, 0.15), transparent 40%),
+                        radial-gradient(circle at 90% 20%, rgba(45, 212, 191, 0.15), transparent 40%);
+      background-size: 200% 200%; animation: auroraMove 15s ease infinite alternate;
     }
-
-    @keyframes auroraMove {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
-    }
-
-    .wrap {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 40px 24px 80px;
-    }
-
-    /* --- 頂部導航 (Header) --- */
+    @keyframes auroraMove { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 40px 24px 80px; }
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 32px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 32px;
-      position: relative;
-      overflow: hidden;
+      display: flex; justify-content: space-between; align-items: center; padding: 20px 32px;
+      background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border);
+      border-radius: var(--radius); box-shadow: var(--shadow-lg); margin-bottom: 32px;
     }
-
-    /* 頂部流光效果 */
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0.5;
-    }
-
-    .title h1 {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 0.5px;
-    }
+    .title h1 { margin: 0; font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .title .sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
-
-    .tag-pill {
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: 99px;
-      background: rgba(45, 212, 191, 0.1);
-      border: 1px solid rgba(45, 212, 191, 0.2);
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    /* --- 兩欄佈局 --- */
-    .grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 24px;
-    }
+    .tag-pill { font-size: 12px; padding: 6px 12px; border-radius: 99px; background: rgba(45, 212, 191, 0.1); border: 1px solid rgba(45, 212, 191, 0.2); color: var(--accent); font-weight: 600; }
+    
+    .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; }
     @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
-
-    /* --- 卡片容器 (Card) --- */
-    .card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(var(--glass-blur));
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
     
-    .card .hd {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--glass-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.02);
-    }
-    
+    .card { background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border); border-radius: var(--radius); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; overflow: hidden; }
+    .card .hd { padding: 20px 24px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); }
     .card .bd { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 20px; }
-
-    /* --- 表單元件美化 --- */
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 14px;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--brand);
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    textarea {
-      min-height: 450px;
-      resize: vertical;
-      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-      line-height: 1.7;
-    }
-
-    /* --- 科目選擇 Tabs --- */
+    
+    label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+    input, select, textarea { width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: var(--text); font-size: 14px; outline: none; transition: 0.2s; }
+    textarea { min-height: 520px; font-family: monospace; line-height: 1.7; resize: vertical; }
+    
     .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-    .tab {
-      padding: 8px 16px;
-      border-radius: 99px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid transparent;
-      font-size: 13px;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .tab:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
-    .tab.active {
-      background: rgba(139, 92, 246, 0.15);
-      border-color: rgba(139, 92, 246, 0.3);
-      color: #fff;
-      font-weight: 600;
-      box-shadow: 0 0 15px var(--brand-glow);
-    }
+    .tab { padding: 8px 16px; border-radius: 99px; background: rgba(255, 255, 255, 0.05); border: 1px solid transparent; font-size: 13px; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+    .tab.active { background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3); color: #fff; font-weight: 600; }
 
-    /* --- 題組區塊 (Block) --- */
-    .qblock {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      transition: all 0.2s ease;
-      position: relative;
-    }
-    
-    .qblock:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    /* 重點整理特殊樣式 (Aurora Green Glow) */
-    .qblock[data-is-summary="true"] {
-      border-color: rgba(45, 212, 191, 0.3);
-      background: linear-gradient(90deg, rgba(45, 212, 191, 0.05) 0%, transparent 100%);
-      box-shadow: 0 4px 20px rgba(45, 212, 191, 0.05);
-    }
-
-    .qhead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .qtitle { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    
-    .qactions button {
-      padding: 4px 8px;
-      font-size: 12px;
-      margin-left: 4px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* --- 按鈕 (Buttons) --- */
-    .btns { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
-    
-    button {
-      padding: 10px 18px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    
-    button:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-1px); }
-
-    /* 主要按鈕 (生成) */
-    button.primary {
-      background: linear-gradient(135deg, var(--brand), #6366f1);
-      border: none;
-      color: #fff;
-      box-shadow: 0 4px 15px var(--brand-glow);
-    }
-    button.primary:hover {
-      box-shadow: 0 6px 20px var(--brand-glow);
-      filter: brightness(1.1);
-    }
-
-    /* 特殊按鈕 (重點整理) */
-    #btnAddSummary {
-      border-color: rgba(45, 212, 191, 0.3);
-      color: var(--accent);
-    }
-    #btnAddSummary:hover {
-      background: rgba(45, 212, 191, 0.1);
-    }
-
-    /* --- 網格輔助 --- */
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .qgrid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; }
-    @media (max-width: 600px) { .row, .qgrid { grid-template-columns: 1fr; } }
-
-    /* --- 其他 --- */
-    .divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 24px 0; }
-    .hint { font-size: 12px; color: var(--muted); margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--accent); }
-
-    .toast {
-      position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%);
-      background: #0f172a; border: 1px solid var(--accent);
-      color: var(--accent); padding: 12px 24px; border-radius: 99px;
-      font-size: 14px; font-weight: 600;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-      z-index: 100; display: none;
-    }
+    .qblock { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 20px; margin-bottom: 16px; position: relative; }
+    .btns { display: flex; gap: 12px; margin-top: 12px; }
+    button { padding: 10px 18px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    button.primary { background: linear-gradient(135deg, var(--brand), #6366f1); border: none; color: #fff; width: 100%; margin-top: 20px; padding: 14px; }
+    .toast { position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%); background: #0f172a; border: 1px solid var(--accent); color: var(--accent); padding: 12px 24px; border-radius: 99px; font-size: 14px; display: none; z-index: 1000; }
   </style>
 </head>
 <body>
@@ -291,439 +58,195 @@
 <div class="wrap">
   <header>
     <div class="title">
-      <h1>教師出題 Prompt 模板 <span style="font-size:0.8em; opacity:0.8; font-weight:400;">Aurora Edition</span></h1>
-      <div class="sub">✨ 資深教師邏輯 ✕ 學科素養導向 ｜ 國語成語 ｜ 社會年表 ｜ 科學探究</div>
+      <h1>教師出題 Prompt 模板 <span style="font-size:0.8em; opacity:0.8; font-weight:400;">Aurora v6.3 Ultimate</span></h1>
+      <div class="sub">✨ 教學靈魂回歸版 ｜ 自然分類統整 ｜ 社會時序故事 ｜ 數學步驟詳解</div>
     </div>
     <div class="tag-pill">Gemini 2.0 Optimized</div>
   </header>
 
   <div class="grid">
     <div class="card">
-      <div class="hd">
-        <b>⚙️ 參數設定面板</b>
-        <span class="tag-pill" id="summaryBadge" style="background:rgba(255,255,255,0.05); color:var(--text); border-color:rgba(255,255,255,0.1)">科目：國語</span>
-      </div>
+      <div class="hd"><b>⚙️ 內容規劃面板</b></div>
       <div class="bd">
         <div class="tabs" id="subjectTabs">
-          <div class="tab active" data-subject="國語">國語 (字詞/成語)</div>
-          <div class="tab" data-subject="數學">數學 (邏輯/應用)</div>
-          <div class="tab" data-subject="社會">社會 (故事/時序)</div>
-          <div class="tab" data-subject="自然">自然 (實驗/變因)</div>
-          <div class="tab" data-subject="英文">英文 (文法/閱讀)</div>
+          <div class="tab active" data-subject="國語">國語</div>
+          <div class="tab" data-subject="數學">數學</div>
+          <div class="tab" data-subject="社會">社會</div>
+          <div class="tab" data-subject="自然">自然</div>
+          <div class="tab" data-subject="英文">英文</div>
         </div>
 
-        <div class="row">
-          <div>
-            <label>年級對象</label>
-            <select id="grade">
-              <option>三年級</option><option>四年級</option><option>五年級</option><option selected>六年級</option>
-              <option>國中七年級</option><option>國中八年級</option><option>國中九年級</option>
-            </select>
-          </div>
-          <div>
-            <label>整體難度</label>
-            <select id="overallDifficulty">
-              <option value="中" selected>標準（中等）</option>
-              <option value="易">基礎（簡單）</option>
-              <option value="難">進階（困難）</option>
-              <option value="混合難易度">混合（易3:中4:難3）</option>
-              <option value="素養導向">素養導向（情境多/題幹長）</option>
-            </select>
-          </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div><label>年級</label><select id="grade"><option>三年級</option><option>四年級</option><option>五年級</option><option selected>六年級</option><option>國中七年級</option></select></div>
+          <div><label>整體難度</label><select id="difficulty"><option value="中">標準中等</option><option value="易">簡單基礎</option><option value="難">挑戰進階</option><option value="素養導向">素養導向</option></select></div>
         </div>
 
-        <div class="row" style="margin-top:12px;">
-           <div>
-             <label>版本/來源 (選填)</label>
-             <input id="publisher" placeholder="例：康軒 / 翰林 / 南一">
-           </div>
-           <div>
-             <label>測驗/講義主題 (選填)</label>
-             <input id="examTopic" placeholder="例：期末考範圍 / 第二單元">
-           </div>
-        </div>
-        
-        <div class="divider"></div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <b style="font-size:14px; color:#fff;">📦 內容區塊清單</b>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:12px;">
+           <input id="publisher" placeholder="參考版本 (例：康軒/翰林/南一)">
+           <input id="topic" placeholder="單元大主題 (例：圓面積 / 水溶液)">
         </div>
 
+        <div style="margin: 20px 0; height: 1px; background: rgba(255,255,255,0.1);"></div>
         <div id="blocks"></div>
 
         <div class="btns">
-          <button class="ghost" id="btnAdd">＋ 新增測驗題組</button>
-          <button class="ghost" id="btnAddSummary" id="btnAddSummary">＋ 新增重點整理</button>
-        </div>
-        
-        <div class="btns" style="margin-top:20px;">
-          <button class="ghost" id="btnLoadSample" style="width:100%; justify-content:center; border-style:dashed;">📥 一鍵套用：社會科範例 (混用模式)</button>
+          <button id="btnAddQuiz">＋ 新增測驗題組</button>
+          <button id="btnAddSum" style="color:var(--accent);">＋ 新增重點講義 (分類表/口訣)</button>
         </div>
 
-        <div style="margin-top:auto; padding-top:24px;">
-           <button class="primary" id="btnGenerate" style="width:100%; font-size:15px; padding:14px;">✨ 立即生成 AI 指令 (Prompt)</button>
-        </div>
+        <button class="primary" id="btnGen">✨ 生成專屬 AI 命題指令 (高質量版)</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="hd">
-        <b>📝 AI 指令輸出區</b>
-        <span class="tag-pill" id="countBadge" style="background:rgba(255,255,255,0.05); color:var(--text); border-color:rgba(255,255,255,0.1)">總題數：—</span>
-      </div>
+      <div class="hd"><b>📝 產出的高質量 Prompt</b></div>
       <div class="bd">
-        <textarea id="output" placeholder="💡 操作指引：&#10;1. 選擇上方「科目」，系統會自動切換該科目的專業題型。&#10;2. 例如：選「國語」會出現成語、字音字形；選「自然」會出現實驗題。&#10;3. 點擊「生成 Prompt」並貼給 AI。&#10;&#10;---&#10;本版更新 (v2.0)：&#10;✅ 國語科：強化成語、修辭與教育部注音標準。&#10;✅ 數學科：要求詳列計算過程與單位檢查。&#10;✅ 自然科：加入實驗變因控制與探究邏輯。&#10;✅ 英文科：新增克漏字與翻譯題型。"></textarea>
-        
-        <div class="btns">
-          <button class="ghost" id="btnCopy" style="flex:1;">📋 一鍵複製</button>
-          <button class="ghost" id="btnReset" style="flex:1; color:#f87171; border-color:rgba(248,113,113,0.3);">🗑️ 清空重設</button>
-        </div>
-        
-        <div class="hint">
-          <b>資深教師 Tip：</b> 
-          系統會根據您選擇的科目，自動在 Prompt 中植入「學科專屬指令」（例如：社會科的時序、國語科的注音標準、自然科的實驗邏輯），確保生成的內容符合教學現場專業需求。
-        </div>
+        <textarea id="output" placeholder="操作指引：&#10;1. 先切換上方「科目」。&#10;2. 點擊「新增」按鈕。&#10;3. 此版本已修正動態連動，生成的指令包含所有專業教學細節！"></textarea>
+        <button id="btnCopy" style="width:100%; margin-top:12px;">📋 一鍵複製指令</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast">✅ 已複製指令！請貼給 AI 開始備課</div>
+<div class="toast" id="toast">✅ 已複製指令！</div>
 
 <script>
   const $ = (id) => document.getElementById(id);
-  let currentSubject = "國語";
+  let currentSub = "國語";
 
-  /* --- 科目題型定義 (資深教師資料庫) --- */
-  const subjectTypes = {
-    "國語": ["選擇題", "字音字形 (含改錯)", "成語運用", "改寫句子/造句", "閱讀題組", "重點整理"],
-    "數學": ["選擇題", "填充題 (計算)", "應用題 (素養導向)", "是非題", "重點整理"],
-    "社會": ["選擇題", "配對題 (年代/人物)", "填充題", "簡答題", "閱讀題組 (史料分析)", "重點整理"],
-    "自然": ["選擇題", "實驗變因題", "填充題", "是非題", "閱讀題組 (科學新知)", "重點整理"],
-    "英文": ["選擇題 (單字/文法)", "克漏字 (Cloze)", "中翻英/英翻中", "閱讀測驗", "配對題", "重點整理"]
+  // --- 專業題型註冊表 (科目隔離邏輯) ---
+  const commonTypes = ["是非題", "選擇題", "填充題", "閱讀題組"];
+  
+  const subjectRegistry = {
+    "國語": [...commonTypes, "字音字形 (含改錯)", "成語運用", "修辭技巧解析", "改寫句子"],
+    "數學": [...commonTypes, "基礎運算題", "應用問題 (教材參考/新編)", "圖表判讀題", "簡答題"],
+    "社會": [...commonTypes, "配對題 (史地連結)", "大事年表題", "地圖判讀題", "簡答題"],
+    "自然": [...commonTypes, "實驗變因分析題", "性質分類統整表", "配對題 (性質歸類)"],
+    "英文": [...commonTypes, "克漏字 (Cloze)", "中翻英/造句", "單字配對"]
   };
 
-  /* --- 切換科目 --- */
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      currentSubject = tab.dataset.subject;
-      $("summaryBadge").textContent = `科目：${currentSubject}`;
-      
-      // 切換科目時，重新整理題型選單 (若使用者想保留既有區塊則不動，新區塊才生效)
-      // 這裡選擇簡單策略：提示使用者
-      const t = $("toast");
-      t.textContent = `已切換為：${currentSubject} (新增題目時將顯示專屬題型)`;
-      t.style.display = "block";
-      setTimeout(()=>t.style.display="none", 2000);
+  // --- 核心連動監聽 ---
+  document.querySelectorAll(".tab").forEach(t => {
+    t.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      currentSub = t.dataset.subject;
+      refreshAllBlocks(); 
     });
   });
 
-  /* --- 建立區塊 (Block Factory) --- */
-  function makeBlock(data = {}) {
-    const div = document.createElement("div");
-    const isSummary = data.type === "重點整理";
-    
-    div.className = "qblock";
-    if(isSummary) div.setAttribute("data-is-summary", "true");
-    
-    // 根據當前科目生成選項
-    const typeList = subjectTypes[currentSubject] || subjectTypes["國語"];
-    let optionsHtml = "";
-    
-    typeList.forEach(t => {
-      const selected = (data.type === t) ? "selected" : "";
-      optionsHtml += `<option value="${t}" ${selected}>${t}</option>`;
+  function refreshAllBlocks() {
+    document.querySelectorAll('.qblock').forEach(block => {
+      const isSum = block.getAttribute("data-is-summary") === "true";
+      const select = block.querySelector('.b-type');
+      const currentVal = select.value;
+      let options = "";
+      if (isSum) {
+        options = `<option value="重點整理">重點整理 (含分類表/年表/口訣)</option>`;
+      } else {
+        const types = subjectRegistry[currentSub];
+        options = types.map(t => `<option value="${t}" ${t === currentVal ? 'selected' : ''}>${t}</option>`).join("");
+      }
+      select.innerHTML = options;
+      block.querySelector('.q-sub-name').textContent = currentSub;
+      toggleExtraFields(select);
     });
+  }
 
-    // 如果現有的 block type 不在當前科目清單中 (例如切換科目後)，還是要保留顯示
-    if(data.type && !typeList.includes(data.type)) {
-       optionsHtml += `<option value="${data.type}" selected>${data.type} (其他)</option>`;
-    }
+  function makeBlock(isSum) {
+    const div = document.createElement("div");
+    div.className = "qblock";
+    div.setAttribute("data-is-summary", isSum);
+    const types = subjectRegistry[currentSub];
+    let options = isSum ? `<option value="重點整理">重點整理 (含分類表/年表/口訣)</option>` : types.map(t => `<option value="${t}">${t}</option>`).join("");
 
     div.innerHTML = `
-      <div class="qhead">
-        <div class="qtitle">
-          ${isSummary ? '📚 重點整理講義' : '✍️ 測驗題組'}
-        </div>
-        <div class="qactions">
-          <button class="ghost" onclick="moveBlock(this, -1)">↑</button>
-          <button class="ghost" onclick="moveBlock(this, 1)">↓</button>
-          <button class="ghost" onclick="removeBlock(this)" style="color:#f87171; border-color:rgba(248,113,113,0.3)">×</button>
-        </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+        <b style="font-size:14px;"><span class="q-sub-name">${currentSub}</span> - ${isSum?'講義重點':'測驗題組'}</b>
+        <button onclick="this.closest('.qblock').remove()" style="color:#f87171; border:none; background:transparent; cursor:pointer;">✕</button>
       </div>
-
-      <div class="qgrid">
-        <div>
-          <label>單元名稱 / 範圍</label>
-          <input data-k="unit" placeholder="${isSummary ? '例：修辭 / 台灣地形' : '例：分數 / 第一課'}" value="${data.unit||""}">
-        </div>
-        <div>
-          <label>題型</label>
-          <select data-k="type" onchange="updateBlockUI(this)">${optionsHtml}</select>
-        </div>
+      <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:12px;">
+        <div><label>單元/主題</label><input class="b-unit" placeholder="關鍵字"></div>
+        <div><label>模式/題型</label><select class="b-type" onchange="toggleExtraFields(this)">${options}</select></div>
       </div>
-
-      <div class="dynamic-fields">
-        <div class="row field-std" style="margin-top:16px;">
-          <div>
-            <label>題數</label>
-            <input data-k="count" type="number" min="1" value="${data.count||5}">
-          </div>
-          <div>
-            <label>難度</label>
-            <select data-k="difficulty">
-              <option ${data.difficulty==="易"?"selected":""}>易</option>
-              <option ${data.difficulty==="中"?"selected":""}>中</option>
-              <option ${data.difficulty==="難"?"selected":""}>難</option>
-              <option ${data.difficulty==="混合"?"selected":""}>混合</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row field-match" style="display:none; margin-top:16px;">
-          <div><label>左側題目數</label><input data-k="matchCount" type="number" value="${data.matchCount||5}"></div>
-          <div><label>右側選項池</label><input data-k="matchPool" type="number" value="${data.matchPool||6}"></div>
-        </div>
-
-        <div class="row field-reading" style="display:none; margin-top:16px;">
-          <div><label>文章字數</label><input data-k="readWords" type="number" value="${data.readWords||450}"></div>
-          <div><label>每組題數</label><input data-k="readQps" type="number" value="${data.readQps||5}"></div>
-        </div>
-
-        <div class="field-summary" style="display:none; margin-top:16px; border-top:1px dashed rgba(255,255,255,0.1); padding-top:16px;">
-          <div class="row">
-            <div>
-              <label>內容深度</label>
-              <select data-k="sumDepth">
-                <option value="標準" ${data.sumDepth!=="詳細"?"selected":""}>標準 (考前複習用)</option>
-                <option value="詳細" ${data.sumDepth==="詳細"?"selected":""}>詳細 (含故事/延伸教學)</option>
-              </select>
-            </div>
-            <div>
-              <label>比較呈現方式</label>
-              <select data-k="sumViz">
-                <option value="表格">Markdown 表格 (推薦)</option>
-                <option value="流程圖">文字流程圖 (A→B)</option>
-                <option value="條列">階層式條列</option>
-              </select>
-            </div>
-          </div>
-          <div class="hint" style="margin-top:12px;">
-            ✨ <span id="summaryHintText">系統將自動依據科目特性生成最佳化整理結構。</span>
-          </div>
-        </div>
+      <div class="extra-fields" style="display:none; margin-top:12px; grid-template-columns: 1fr 1fr; gap:16px;">
+         <div class="field-match" style="display:none;"><label>選項池數量</label><input class="b-match-pool" type="number" value="6"></div>
+         <div class="field-read" style="display:none;"><label>文章字數</label><input class="b-read-words" type="number" value="450"></div>
+      </div>
+      <div class="row" style="display:${isSum?'none':'grid'}; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
+        <div><label>數量</label><input class="b-cnt" type="number" value="5"></div>
+        <div><label>難度</label><select class="b-diff"><option>易</option><option selected>中</option><option>難</option></select></div>
       </div>
     `;
-
-    setTimeout(() => updateBlockUI(div.querySelector('select[data-k="type"]')), 0);
-    return div;
+    $("blocks").appendChild(div);
+    toggleExtraFields(div.querySelector('.b-type'));
   }
 
-  /* --- UI 更新邏輯 --- */
-  function updateBlockUI(selectInfo) {
-    const block = selectInfo.closest('.qblock');
-    const type = selectInfo.value;
-    const isSummary = type === "重點整理";
-    
-    if(isSummary) block.setAttribute("data-is-summary", "true");
-    else block.removeAttribute("data-is-summary");
-    
-    block.querySelector('.qtitle').textContent = isSummary ? '📚 重點整理 (AI 智能生成)' : '✍️ 測驗題組';
-
-    const fStd = block.querySelector('.field-std');
+  function toggleExtraFields(select) {
+    const block = select.closest('.qblock');
+    const extra = block.querySelector('.extra-fields');
+    if(!extra) return;
     const fMatch = block.querySelector('.field-match');
-    const fRead = block.querySelector('.field-reading');
-    const fSum = block.querySelector('.field-summary');
-
-    fStd.style.display = "none";
-    fMatch.style.display = "none";
-    fRead.style.display = "none";
-    fSum.style.display = "none";
-
-    if (type.includes("配對")) fMatch.style.display = "grid";
-    else if (type.includes("閱讀")) fRead.style.display = "grid";
-    else if (type === "重點整理") fSum.style.display = "block";
-    else fStd.style.display = "grid";
+    const fRead = block.querySelector('.field-read');
+    extra.style.display = "none"; fMatch.style.display = "none"; fRead.style.display = "none";
+    if(select.value.includes("配對")) { extra.style.display = "grid"; fMatch.style.display = "block"; }
+    if(select.value.includes("閱讀") || select.value.includes("克漏字")) { extra.style.display = "grid"; fRead.style.display = "block"; }
   }
 
-  function addBlock(data) { $("blocks").appendChild(makeBlock(data)); }
-  function removeBlock(btn) { btn.closest('.qblock').remove(); }
-  function moveBlock(btn, dir) {
-    const block = btn.closest('.qblock');
-    if (dir === -1 && block.previousElementSibling) block.parentElement.insertBefore(block, block.previousElementSibling);
-    if (dir === 1 && block.nextElementSibling) block.parentElement.insertBefore(block.nextElementSibling, block);
-  }
+  $("btnAddQuiz").onclick = () => makeBlock(false);
+  $("btnAddSum").onclick = () => makeBlock(true);
 
-  /* --- 核心：Prompt 生成 (資深教師邏輯引擎) --- */
-  function generatePrompt() {
+  // --- 核心：究極專業 Prompt 生成引擎 (補回所有消失的細節) ---
+  $("btnGen").onclick = () => {
     const grade = $("grade").value;
-    const subject = currentSubject;
-    const diff = $("overallDifficulty").value;
-    const publisher = $("publisher").value;
-    const topic = $("examTopic").value;
-    
-    const blocks = Array.from(document.querySelectorAll('.qblock')).map(b => {
-      const get = k => b.querySelector(`[data-k="${k}"]`)?.value;
-      return {
-        unit: get('unit') || "（未填寫單元）",
-        type: get('type'),
-        count: get('count'),
-        difficulty: get('difficulty'),
-        matchCount: get('matchCount'),
-        matchPool: get('matchPool'),
-        readWords: get('readWords'),
-        readQps: get('readQps'),
-        sumDepth: get('sumDepth'),
-        sumViz: get('sumViz')
-      };
-    });
+    const diff = $("difficulty").value;
+    const pub = $("publisher").value;
+    const topic = $("topic").value;
 
-    const quizBlocks = blocks.filter(b => b.type !== "重點整理");
-    const sumBlocks = blocks.filter(b => b.type === "重點整理");
+    let p = `# 角色設定：你是一位深耕台灣教育多年，精通 108 課綱與素養導向命題的 ${currentSub} 科資深名師 Aurora。\n`;
+    p += `# 任務對象：${grade} 學生\n# 總體主題：${topic} (參考版本：${pub || '不限'})\n\n`;
 
-    let prompt = "";
-
-    /* --- 科目專屬 System Prompt (注入靈魂) --- */
-    let subjectInstruction = "";
-    if (subject === "社會") {
-      subjectInstruction = `
-- **【時序與故事】**：若涉及歷史，必須製作「大事年表」釐清時序。在核心概念解說時，請補充相關「歷史小故事」或「傳說」以增加記憶點。
-- **【地圖與空間】**：若涉及地理，請以文字生動描述地形特徵或地圖相對位置。`;
-    } else if (subject === "國語") {
-      subjectInstruction = `
-- **【注音規範】**：生難字詞必須標註「教育部標準注音 (Bopomofo)」。
-- **【成語與修辭】**：請特別著重「成語運用」與「修辭技巧」的解析。
-- **【語文素養】**：避免死背解釋，請提供「生活例句」或「語境應用」。`;
-    } else if (subject === "數學") {
-      subjectInstruction = `
-- **【計算過程】**：詳解卷必須列出「Step-by-step 計算過程」，不能只給答案。
-- **【素養應用】**：應用題請設計貼近小學生生活的真實情境（如購物、旅遊、分配）。
-- **【單位檢查】**：請在詳解中特別提醒「單位換算」的易錯點。`;
-    } else if (subject === "自然") {
-      subjectInstruction = `
-- **【實驗探究】**：請強調「操作變因」、「控制變因」與「應變變因」的分析。
-- **【科學邏輯】**：解釋現象時，請依照「觀察 -> 假設 -> 驗證」的邏輯。`;
-    } else if (subject === "英文") {
-      subjectInstruction = `
-- **【語言分級】**：請確保單字與文法難度符合台灣國中/小 ${grade} 程度 (參考 CEFR A1-A2)。
-- **【文法解析】**：詳解請清楚解釋文法規則，並提供錯誤選項的錯誤原因。`;
+    // --- 專業指令注入 (補回消失的細節) ---
+    let subPrompt = "";
+    if(currentSub === "數學") {
+      subPrompt = `【數學科專業要求】\n- **教材與創新**：請優先參考 ${pub} 教材風格。可對教材題目進行「數據微調」或「情境重組」，亦鼓勵編寫貼近小學生生活的「全新素養應用題」。\n- **詳解規範**：詳解卷必須提供完整的「Step-by-Step 計算過程」與列式，並特別標註「單位換算」陷阱或常見計算迷思。\n- **核心整理**：若生成講義，請包含「解題 S.O.P. 思路」與公式白話解釋。`;
+    } else if(currentSub === "自然") {
+      subPrompt = `【自然科專業要求】\n- **分類統整表格**：★核心任務★ 針對單元性質 (如：酸鹼性、接觸/超距力、導體/絕緣體) 製作「Markdown 分類對照表」，讓性質差異一目了然。\n- **記憶口訣**：針對複雜或容易混淆的概念，編寫一組押韻、好記的口訣。\n- **探究邏輯**：實驗題必須明確標註「操作變因」、「控制變因」與「應變變因」。\n- **生活應用**：講義須遵循「現象引導 -> 科學原理 -> 生活小撇步」的三層次結構。`;
+    } else if(currentSub === "社會") {
+      subPrompt = `【社會科專業要求】\n- **大事年表**：涉及歷史內容時，必須產出 Markdown 表格年表 (時期｜事件｜關鍵影響)。\n- **故事化教學**：將枯燥知識點融入相關的「歷史小故事」、「傳說軼聞」或「生活實例」。\n- **空間觀念**：強化地圖方位、地形特徵與地理成因的解析。`;
+    } else if(currentSub === "國語") {
+      subPrompt = `【國語科專業要求】\n- **標準注音**：所有生難字詞必須標註「教育部標準注音 (Bopomofo)」。\n- **情境造句**：成語解釋後必須附帶「生活化情境造句」，嚴禁死背。\n- **修辭辨析**：明確指出並解析句子所運用的修辭技巧 (如：譬喻、轉化)。`;
+    } else {
+      subPrompt = `【英文科專業要求】\n- **文法分級**：單字與文法難度需嚴格符合 CEFR A1-A2 程度。\n- **解析規格**：需提供語法規則解說、詞性標註與正確翻譯。`;
     }
 
-    /* --- Part A: 重點整理 --- */
-    if (sumBlocks.length > 0) {
-      const unitDetails = sumBlocks.map((b, i) => {
-         return `單元 ${i+1}：${b.unit} (深度：${b.sumDepth} / 視覺：${b.sumViz})`;
-      }).join("\n");
+    p += subPrompt + `\n\n【隱藏指令：直接產出內容，繁體中文，禁止大陸用語。詳解需含白話解析與解題提示。】\n\n`;
 
-      prompt += `
-# 系統設定 (Part A: 重點整理講義)
-你現在的身分是一位深耕 ${subject} 教學的資深教師（代號：Aurora）。
-
-【重要指令：隱藏人設】
-請"扮演"這個角色進行專業整理，但**請勿**在輸出中提及「Aurora」或自我介紹。
-
-【學科專屬指令：${subject}】
-${subjectInstruction}
-
-【整理規則】
-1. 結構要求：
-   - 核心概念 (含因果/定義)
-   - 關鍵詞 (每單元 5-8 個)
-   - 迷思澄清 (易錯觀念比較)
-   - 視覺化圖表 (${sumBlocks[0].sumViz} 形式)
-2. 內容範圍：
-${unitDetails}
-
---------------------------------------------------
-`;
-    }
-
-    /* --- Part B: 測驗出題 --- */
-    if (quizBlocks.length > 0) {
-      let qList = "";
-      quizBlocks.forEach((b, i) => {
-        let spec = "";
-        if(b.type.includes("配對")) spec = `配對 ${b.matchCount} 題 (選項池 ${b.matchPool} 個)`;
-        else if(b.type.includes("閱讀")) spec = `文章約 ${b.readWords} 字，含 ${b.readQps} 小題`;
-        else spec = `${b.count} 題`;
-
-        qList += `${i+1}. 【${b.unit}】${b.type} (${spec}) - 難度：${b.difficulty}\n`;
-      });
-
-      prompt += `
-# 系統設定 (Part B: 測驗出題)
-請接著製作一份 ${subject} 測驗卷。
-
-【測驗規格】
-對象：${grade}｜難度：${diff}
-主題：${topic} ${publisher ? `(${publisher})` : ""}
-課綱：臺灣 108 課綱 (繁體中文)
-
-【學科出題重點】
-${subjectInstruction}
-
-【出題清單】
-${qList}
-
-【輸出格式 (嚴格遵守)】
-1. 文件一：學生卷 (僅題目 + 作答括號)
-2. 文件二：老師詳解卷 (題目 + 正確答案 + 詳細解析 + 易錯點提醒)
-   - 解析需親切、白話，適合老師直接講解給學生聽。
-   - 禁止使用中國用語。
-`;
-    }
-
-    $("output").value = prompt.trim();
-    
-    let totalQ = 0;
-    quizBlocks.forEach(b => {
-       if(b.type.includes("閱讀")) totalQ += parseInt(b.readQps||0);
-       else if(b.type!=="重點整理") totalQ += parseInt(b.count||0);
+    document.querySelectorAll(".qblock").forEach(b => {
+      const unit = b.querySelector(".b-unit").value || "未指定單元";
+      const type = b.querySelector(".b-type").value;
+      const isSum = b.getAttribute("data-is-summary") === "true";
+      
+      if(isSum) {
+        p += `### 📚 重點整理講義：${unit}\n- 要求：生活現象引導 -> 核心原理 (含因果鏈 A->B) -> **專屬分類對照表** -> **記憶口訣** -> 迷思澄清。\n\n`;
+      } else {
+        const cnt = b.querySelector(".b-cnt").value;
+        const bDiff = b.querySelector(".b-diff").value;
+        let extra = "";
+        if(type.includes("配對")) extra = ` (選項池：${b.querySelector('.b-match-pool').value} 個)`;
+        if(type.includes("閱讀")) extra = ` (文章字數：${b.querySelector('.b-read-words').value} 字)`;
+        
+        p += `### ✍️ 測驗題組：${unit}\n- 題型：${type}${extra} | 數量：${cnt} | 難度：${bDiff}\n- 輸出：學生卷 + 老師詳解卷 (需詳細白話說明)。\n\n`;
+      }
     });
-    $("countBadge").textContent = `總題數：${totalQ}`;
-  }
 
-  /* --- 事件綁定 --- */
-  $("btnAdd").addEventListener("click", () => addBlock({type: subjectTypes[currentSubject][0], count:5, difficulty:"中"}));
-  $("btnAddSummary").addEventListener("click", () => addBlock({type:"重點整理"}));
-  $("btnGenerate").addEventListener("click", generatePrompt);
-  
-  $("btnCopy").addEventListener("click", () => {
-    const txt = $("output");
-    txt.select();
-    navigator.clipboard.writeText(txt.value).then(() => {
-      const t = $("toast");
-      t.textContent = "✅ 已複製指令！請貼給 AI 開始備課";
-      t.style.display = "block";
-      setTimeout(()=>t.style.display="none", 2000);
-    });
-  });
+    $("output").value = p.trim() + `\n\n--------------------------------------------------\n請依照上述資深名師規格開始執行任務。`;
+  };
 
-  $("btnReset").addEventListener("click", () => {
-    $("blocks").innerHTML = "";
-    $("output").value = "";
-    addBlock({type: subjectTypes[currentSubject][0]});
-  });
-
-  $("btnLoadSample").addEventListener("click", () => {
-    $("blocks").innerHTML = "";
-    currentSubject = "社會";
-    $("summaryBadge").textContent = "科目：社會";
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelector('.tab[data-subject="社會"]').classList.add("active");
-    
-    // 範例：混用出題與講義 (社會科全餐)
-    addBlock({type:"重點整理", unit:"荷西時期", sumDepth:"詳細", sumViz:"表格"});
-    addBlock({type:"配對題 (年代/人物)", unit:"重要歷史人物", matchCount:5, matchPool:7});
-    addBlock({type:"選擇題", unit:"清領前期建設", count:5, difficulty:"混合"});
-    generatePrompt();
-  });
-
-  // 初始執行
-  addBlock({type: subjectTypes["國語"][0]});
-
+  $("btnCopy").onclick = () => {
+    $("output").select(); document.execCommand("copy");
+    $("toast").style.display = "block"; setTimeout(()=> $("toast").style.display="none", 2000);
+  };
 </script>
 </body>
 </html>
