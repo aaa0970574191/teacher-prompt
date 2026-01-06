@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>教師出題 Prompt 模板｜Aurora v6.3 專業全功能版</title>
+  <title>教師出題 Prompt 模板｜Aurora v7.0 課綱素養完全體</title>
   <style>
+    /* --- 樣式完全保留，不動 --- */
     :root{
       --bg: #0f172a; --text: #f1f5f9; --muted: #94a3b8;
       --brand: #8b5cf6; --brand-glow: rgba(139, 92, 246, 0.5);
@@ -30,22 +31,17 @@
     .title h1 { margin: 0; font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .title .sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
     .tag-pill { font-size: 12px; padding: 6px 12px; border-radius: 99px; background: rgba(45, 212, 191, 0.1); border: 1px solid rgba(45, 212, 191, 0.2); color: var(--accent); font-weight: 600; }
-    
     .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; }
     @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
-    
     .card { background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border); border-radius: var(--radius); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; overflow: hidden; }
     .card .hd { padding: 20px 24px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); }
     .card .bd { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 20px; }
-    
     label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
     input, select, textarea { width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: var(--text); font-size: 14px; outline: none; transition: 0.2s; }
     textarea { min-height: 520px; font-family: monospace; line-height: 1.7; resize: vertical; }
-    
     .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
     .tab { padding: 8px 16px; border-radius: 99px; background: rgba(255, 255, 255, 0.05); border: 1px solid transparent; font-size: 13px; color: var(--muted); cursor: pointer; transition: all 0.2s; }
     .tab.active { background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3); color: #fff; font-weight: 600; }
-
     .qblock { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 20px; margin-bottom: 16px; position: relative; }
     .btns { display: flex; gap: 12px; margin-top: 12px; }
     button { padding: 10px 18px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
@@ -58,8 +54,8 @@
 <div class="wrap">
   <header>
     <div class="title">
-      <h1>教師出題 Prompt 模板 <span style="font-size:0.8em; opacity:0.8; font-weight:400;">Aurora v6.3 Ultimate</span></h1>
-      <div class="sub">✨ 教學靈魂回歸版 ｜ 自然分類統整 ｜ 社會時序故事 ｜ 數學步驟詳解</div>
+      <h1>教師出題 Prompt 模板 <span style="font-size:0.8em; opacity:0.8; font-weight:400;">Aurora v7.0 Ultimate</span></h1>
+      <div class="sub">✨ 108課綱素養全植入 ｜ 生活應用加深印象 ｜ 學生/老師分卷 ｜ 深度內容</div>
     </div>
     <div class="tag-pill">Gemini 2.0 Optimized</div>
   </header>
@@ -83,7 +79,7 @@
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:12px;">
            <input id="publisher" placeholder="參考版本 (例：康軒/翰林/南一)">
-           <input id="topic" placeholder="單元大主題 (例：圓面積 / 水溶液)">
+           <input id="topic" placeholder="單元大主題 (例：鄭氏時期 / 太陽)">
         </div>
 
         <div style="margin: 20px 0; height: 1px; background: rgba(255,255,255,0.1);"></div>
@@ -91,7 +87,7 @@
 
         <div class="btns">
           <button id="btnAddQuiz">＋ 新增測驗題組</button>
-          <button id="btnAddSum" style="color:var(--accent);">＋ 新增重點講義 (分類表/口訣)</button>
+          <button id="btnAddSum" style="color:var(--accent);">＋ 新增重點講義 (全單元/人物)</button>
         </div>
 
         <button class="primary" id="btnGen">✨ 生成專屬 AI 命題指令 (高質量版)</button>
@@ -101,7 +97,7 @@
     <div class="card">
       <div class="hd"><b>📝 產出的高質量 Prompt</b></div>
       <div class="bd">
-        <textarea id="output" placeholder="操作指引：&#10;1. 先切換上方「科目」。&#10;2. 點擊「新增」按鈕。&#10;3. 此版本已修正動態連動，生成的指令包含所有專業教學細節！"></textarea>
+        <textarea id="output" placeholder="v7.0 更新說明：&#10;除了保留前版所有功能，此版本已植入「108課綱素養」最高指令。&#10;強制要求題目與講義必須結合「生活情境」與「跨領域連結」，不再死背死記！"></textarea>
         <button id="btnCopy" style="width:100%; margin-top:12px;">📋 一鍵複製指令</button>
       </div>
     </div>
@@ -114,18 +110,18 @@
   const $ = (id) => document.getElementById(id);
   let currentSub = "國語";
 
-  // --- 專業題型註冊表 (科目隔離邏輯) ---
+  // --- 專業題型註冊表 ---
   const commonTypes = ["是非題", "選擇題", "填充題", "閱讀題組"];
   
   const subjectRegistry = {
-    "國語": [...commonTypes, "字音字形 (含改錯)", "成語運用", "修辭技巧解析", "改寫句子"],
+    "國語": [...commonTypes, "字音字形 (含改錯)", "成語運用", "修辭技巧解析", "重要人物誌 (作者/角色)", "改寫句子"], 
     "數學": [...commonTypes, "基礎運算題", "應用問題 (教材參考/新編)", "圖表判讀題", "簡答題"],
-    "社會": [...commonTypes, "配對題 (史地連結)", "大事年表題", "地圖判讀題", "簡答題"],
-    "自然": [...commonTypes, "實驗變因分析題", "性質分類統整表", "配對題 (性質歸類)"],
+    "社會": [...commonTypes, "配對題 (史地連結)", "大事年表題", "重要人物誌 (歷史人物)", "地圖判讀題", "簡答題"], 
+    "自然": [...commonTypes, "實驗變因分析題", "性質分類統整表", "重要人物誌 (科學家)", "配對題 (性質歸類)"], 
     "英文": [...commonTypes, "克漏字 (Cloze)", "中翻英/造句", "單字配對"]
   };
 
-  // --- 核心連動監聽 ---
+  // --- 連動監聽 ---
   document.querySelectorAll(".tab").forEach(t => {
     t.addEventListener("click", () => {
       document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
@@ -140,25 +136,40 @@
       const isSum = block.getAttribute("data-is-summary") === "true";
       const select = block.querySelector('.b-type');
       const currentVal = select.value;
-      let options = "";
-      if (isSum) {
-        options = `<option value="重點整理">重點整理 (含分類表/年表/口訣)</option>`;
-      } else {
-        const types = subjectRegistry[currentSub];
-        options = types.map(t => `<option value="${t}" ${t === currentVal ? 'selected' : ''}>${t}</option>`).join("");
-      }
+      
+      let options = getOptionsHtml(isSum);
       select.innerHTML = options;
+      
+      if ([...select.options].some(o => o.value === currentVal)) {
+          select.value = currentVal;
+      }
+
       block.querySelector('.q-sub-name').textContent = currentSub;
       toggleExtraFields(select);
     });
+  }
+
+  function getOptionsHtml(isSum) {
+    let opts = "";
+    if (isSum) {
+      opts += `<option value="重點整理">全單元重點整理 (含分類表/年表)</option>`;
+      const subTypes = subjectRegistry[currentSub];
+      const personType = subTypes.find(t => t.includes("重要人物誌"));
+      if (personType) {
+        opts += `<option value="${personType}">人物專題整理 (Biography)</option>`;
+      }
+    } else {
+      const types = subjectRegistry[currentSub];
+      opts = types.map(t => `<option value="${t}">${t}</option>`).join("");
+    }
+    return opts;
   }
 
   function makeBlock(isSum) {
     const div = document.createElement("div");
     div.className = "qblock";
     div.setAttribute("data-is-summary", isSum);
-    const types = subjectRegistry[currentSub];
-    let options = isSum ? `<option value="重點整理">重點整理 (含分類表/年表/口訣)</option>` : types.map(t => `<option value="${t}">${t}</option>`).join("");
+    let options = getOptionsHtml(isSum);
 
     div.innerHTML = `
       <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
@@ -166,7 +177,7 @@
         <button onclick="this.closest('.qblock').remove()" style="color:#f87171; border:none; background:transparent; cursor:pointer;">✕</button>
       </div>
       <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:12px;">
-        <div><label>單元/主題</label><input class="b-unit" placeholder="關鍵字"></div>
+        <div><label>單元/人物名稱</label><input class="b-unit" placeholder="例：鄭成功 / 牛頓"></div>
         <div><label>模式/題型</label><select class="b-type" onchange="toggleExtraFields(this)">${options}</select></div>
       </div>
       <div class="extra-fields" style="display:none; margin-top:12px; grid-template-columns: 1fr 1fr; gap:16px;">
@@ -174,7 +185,7 @@
          <div class="field-read" style="display:none;"><label>文章字數</label><input class="b-read-words" type="number" value="450"></div>
       </div>
       <div class="row" style="display:${isSum?'none':'grid'}; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
-        <div><label>數量</label><input class="b-cnt" type="number" value="5"></div>
+        <div><label>數量</label><input class="b-cnt" type="number" value="1"></div>
         <div><label>難度</label><select class="b-diff"><option>易</option><option selected>中</option><option>難</option></select></div>
       </div>
     `;
@@ -196,7 +207,7 @@
   $("btnAddQuiz").onclick = () => makeBlock(false);
   $("btnAddSum").onclick = () => makeBlock(true);
 
-  // --- 核心：究極專業 Prompt 生成引擎 (補回所有消失的細節) ---
+  // --- 核心：究極專業 Prompt 生成引擎 (v7.0 素養完全體) ---
   $("btnGen").onclick = () => {
     const grade = $("grade").value;
     const diff = $("difficulty").value;
@@ -204,43 +215,82 @@
     const topic = $("topic").value;
 
     let p = `# 角色設定：你是一位深耕台灣教育多年，精通 108 課綱與素養導向命題的 ${currentSub} 科資深名師 Aurora。\n`;
-    p += `# 任務對象：${grade} 學生\n# 總體主題：${topic} (參考版本：${pub || '不限'})\n\n`;
+    p += `# 任務對象：${grade} 學生\n# 總體主題：${topic} (參考版本：${pub || '不限'})\n`;
+    
+    // --- ★ v7.0 新增：108課綱素養最高指導原則 ---
+    p += `# 命題最高指導原則：嚴格遵守「台灣 108 課綱核心素養」。所有內容須強調「生活情境應用 (Contextualizing)」與「跨領域連結」，嚴禁死背硬記。\n`;
+    p += `# 內容份量：必須「豐富詳盡 (High Volume)」。請製作「教師用詳解版」，需深入解析。\n\n`;
 
-    // --- 專業指令注入 (補回消失的細節) ---
+    // --- 分科專業指令 (總體要求) ---
     let subPrompt = "";
     if(currentSub === "數學") {
-      subPrompt = `【數學科專業要求】\n- **教材與創新**：請優先參考 ${pub} 教材風格。可對教材題目進行「數據微調」或「情境重組」，亦鼓勵編寫貼近小學生生活的「全新素養應用題」。\n- **詳解規範**：詳解卷必須提供完整的「Step-by-Step 計算過程」與列式，並特別標註「單位換算」陷阱或常見計算迷思。\n- **核心整理**：若生成講義，請包含「解題 S.O.P. 思路」與公式白話解釋。`;
+      subPrompt = `【數學科專業要求】\n- **生活素養**：題目設計須結合真實生活情境（如購物、旅遊、建築），避免純數字運算。\n- **詳解規範**：詳解卷必須提供完整的「Step-by-Step 計算過程」與列式，並特別標註「單位換算」陷阱。\n- **核心整理**：包含「解題 S.O.P. 思路」與公式白話解釋。`;
     } else if(currentSub === "自然") {
-      subPrompt = `【自然科專業要求】\n- **分類統整表格**：★核心任務★ 針對單元性質 (如：酸鹼性、接觸/超距力、導體/絕緣體) 製作「Markdown 分類對照表」，讓性質差異一目了然。\n- **記憶口訣**：針對複雜或容易混淆的概念，編寫一組押韻、好記的口訣。\n- **探究邏輯**：實驗題必須明確標註「操作變因」、「控制變因」與「應變變因」。\n- **生活應用**：講義須遵循「現象引導 -> 科學原理 -> 生活小撇步」的三層次結構。`;
+      subPrompt = `【自然科專業要求】\n- **生活連結**：強調科學原理在日常生活中的應用與實例（如：為什麼蘋果會變色？）。\n- **分類統整表格**：★核心★ 針對單元性質 (如：酸鹼性、接觸/超距力) 製作「Markdown 分類對照表」。\n- **探究邏輯**：實驗題必須標註「操作變因」、「控制變因」與「應變變因」。`;
     } else if(currentSub === "社會") {
-      subPrompt = `【社會科專業要求】\n- **大事年表**：涉及歷史內容時，必須產出 Markdown 表格年表 (時期｜事件｜關鍵影響)。\n- **故事化教學**：將枯燥知識點融入相關的「歷史小故事」、「傳說軼聞」或「生活實例」。\n- **空間觀念**：強化地圖方位、地形特徵與地理成因的解析。`;
+      subPrompt = `【社會科專業要求】\n- **生活啟示**：歷史事件須連結到現代生活的啟示或古今對照。\n- **大事年表**：歷史內容必須產出 Markdown 表格年表 (時期｜事件｜關鍵影響)。\n- **故事化教學**：將枯燥知識點融入相關的「歷史小故事」或「傳說軼聞」。\n- **空間觀念**：強化地圖方位、地形特徵與地理成因的解析。`;
     } else if(currentSub === "國語") {
-      subPrompt = `【國語科專業要求】\n- **標準注音**：所有生難字詞必須標註「教育部標準注音 (Bopomofo)」。\n- **情境造句**：成語解釋後必須附帶「生活化情境造句」，嚴禁死背。\n- **修辭辨析**：明確指出並解析句子所運用的修辭技巧 (如：譬喻、轉化)。`;
+      subPrompt = `【國語科專業要求】\n- **情境應用**：生字與成語教學必須結合「生活化情境造句」，提升語文運用能力。\n- **標準注音**：所有生難字詞必須標註「教育部標準注音」。\n- **修辭辨析**：明確指出並解析句子所運用的修辭技巧。`;
     } else {
-      subPrompt = `【英文科專業要求】\n- **文法分級**：單字與文法難度需嚴格符合 CEFR A1-A2 程度。\n- **解析規格**：需提供語法規則解說、詞性標註與正確翻譯。`;
+      subPrompt = `【英文科專業要求】\n- **生活溝通**：強調 Communicative Language Teaching (CLT)，單字與句型需能在真實生活中使用。\n- **解析規格**：需提供語法規則解說、詞性標註與正確翻譯。`;
     }
 
-    p += subPrompt + `\n\n【隱藏指令：直接產出內容，繁體中文，禁止大陸用語。詳解需含白話解析與解題提示。】\n\n`;
+    p += subPrompt + `\n`;
+    p += `\n【輸出排版規範 (必須嚴格執行)】\n請將產出內容明確分為兩份獨立文件：\n1. **[第一份：學生測驗卷]**：純題目，不含答案。每題前方須加上 ( ) 供作答。題與題之間務必「多空一行」。\n2. **[第二份：老師詳解卷]**：題目下方緊接答案。必須附上「白話詳解」與「易錯解析」。\n\n`;
 
     document.querySelectorAll(".qblock").forEach(b => {
-      const unit = b.querySelector(".b-unit").value || "未指定單元";
+      const unit = b.querySelector(".b-unit").value || "未指定";
       const type = b.querySelector(".b-type").value;
       const isSum = b.getAttribute("data-is-summary") === "true";
       
+      // --- 人物誌特殊指令 ---
+      let personInstruct = "";
+      if (type.includes("重要人物誌")) {
+          if (currentSub === "社會") {
+              personInstruct = `\n- 【歷史人物規格(詳盡版)】：姓名、所屬朝代/時期、關鍵事蹟(3項)、歷史評價/影響、相關傳說/軼聞。`;
+          } else if (currentSub === "自然") {
+              personInstruct = `\n- 【科學家規格(詳盡版)】：姓名、重要發現/發明、科學實驗過程簡述、對後世的影響、科學精神。`;
+          } else if (currentSub === "國語") {
+              personInstruct = `\n- 【作者/人物規格(詳盡版)】：生平簡介、文學流派/寫作風格、代表作品賞析、課文相關背景故事。`;
+          }
+      }
+
       if(isSum) {
-        p += `### 📚 重點整理講義：${unit}\n- 要求：生活現象引導 -> 核心原理 (含因果鏈 A->B) -> **專屬分類對照表** -> **記憶口訣** -> 迷思澄清。\n\n`;
+        if (type.includes("重要人物誌")) {
+            p += `### 📚 人物專題整理 (詳盡版)：${unit}\n- 形式：結構化人物資料卡或閱讀讀本。\n${personInstruct}\n\n`;
+        } else {
+            // --- ★ v7.0 修正：講義結構加入「生活連結」 ---
+            let sumStruct = "";
+            if(currentSub === "社會") {
+                // 社會科：加入「古今連結與生活啟示」
+                sumStruct = `1. **單元心智圖架構** (條列式)\n   2. **核心名詞與關鍵字詳解**\n   3. **歷史背景與時序引導**\n   4. **大事年表表格** (含年代/事件/影響)\n   5. **📜 歷史小故事/傳說軼聞**\n   6. **政治/經濟/社會/文化 四面向分析**\n   7. **古今連結與現代生活啟示** (生活素養)\n   8. **地圖與空間觀念解析**`;
+            } else if(currentSub === "自然") {
+                // 自然科：加入「生活實例與應用」
+                sumStruct = `1. **核心名詞定義與原理**\n   2. **生活中的科學現象與應用實例** (生活素養)\n   3. **實驗設計** (標註變因/步驟/器材)\n   4. **專屬分類對照表** (Markdown)\n   5. **記憶口訣**\n   6. **延伸科學知識**`;
+            } else if(currentSub === "國語") {
+                sumStruct = `1. **本課形音義辨析** (易錯字/多音字)\n   2. **成語典故、釋義與生活應用造句**\n   3. **修辭技巧解析**\n   4. **課文文意深究與主旨**\n   5. **作者生平與背景**`;
+            } else if(currentSub === "數學") {
+                 sumStruct = `1. **單元核心概念**\n   2. **生活中的數學應用舉例**\n   3. **重要公式與原理推導**\n   4. **解題 S.O.P. 流程**\n   5. **易錯題型與迷思澄清**`;
+            } else {
+                sumStruct = `核心概念導讀 -> 生活情境應用 -> 重點歸納 -> 易混淆點解析 -> 應用範例`;
+            }
+
+            p += `### 📚 重點整理講義 (詳盡版)：${unit}\n- 結構要求：請嚴格依照此順序撰寫，並強調生活連結：\n${sumStruct}。\n\n`;
+        }
       } else {
         const cnt = b.querySelector(".b-cnt").value;
         const bDiff = b.querySelector(".b-diff").value;
         let extra = "";
+        
         if(type.includes("配對")) extra = ` (選項池：${b.querySelector('.b-match-pool').value} 個)`;
         if(type.includes("閱讀")) extra = ` (文章字數：${b.querySelector('.b-read-words').value} 字)`;
         
-        p += `### ✍️ 測驗題組：${unit}\n- 題型：${type}${extra} | 數量：${cnt} | 難度：${bDiff}\n- 輸出：學生卷 + 老師詳解卷 (需詳細白話說明)。\n\n`;
+        // --- ★ v7.0 修正：測驗題強調素養 ---
+        p += `### ✍️ 測驗/資料題：${unit}\n- 題型：${type}${extra} | 數量：${cnt} | 難度：${bDiff}${personInstruct}\n- 命題要求：請設計具備「素養導向」的題目，題幹須結合生活情境，避免死板背誦。\n- 詳解：需含白話解析與易錯點分析。\n\n`;
       }
     });
 
-    $("output").value = p.trim() + `\n\n--------------------------------------------------\n請依照上述資深名師規格開始執行任務。`;
+    $("output").value = p.trim() + `\n\n--------------------------------------------------\n請依照上述規範，先產出學生卷，再產出老師詳解卷。`;
   };
 
   $("btnCopy").onclick = () => {
