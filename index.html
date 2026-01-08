@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>教師出題 Prompt 模板｜Aurora v7.0 課綱素養完全體</title>
+  <title>教師出題 Prompt 模板｜Aurora v7.3 列表展開版</title>
   <style>
     /* --- 樣式完全保留，不動 --- */
     :root{
@@ -54,10 +54,10 @@
 <div class="wrap">
   <header>
     <div class="title">
-      <h1>教師出題 Prompt 模板 <span style="font-size:0.8em; opacity:0.8; font-weight:400;">Aurora v7.0 Ultimate</span></h1>
-      <div class="sub">✨ 108課綱素養全植入 ｜ 生活應用加深印象 ｜ 學生/老師分卷 ｜ 深度內容</div>
+      <h1>教師出題 Prompt 模板 <span style="font-size:0.8em; opacity:0.8; font-weight:400;">Aurora v7.3 Ultimate</span></h1>
+      <div class="sub">✨ 集合名詞強制展開 ｜ 教科書級詳盡度 ｜ 108課綱素養</div>
     </div>
-    <div class="tag-pill">Gemini 2.0 Optimized</div>
+    <div class="tag-pill">Gemini AI Optimized</div>
   </header>
 
   <div class="grid">
@@ -90,14 +90,14 @@
           <button id="btnAddSum" style="color:var(--accent);">＋ 新增重點講義 (全單元/人物)</button>
         </div>
 
-        <button class="primary" id="btnGen">✨ 生成專屬 AI 命題指令 (高質量版)</button>
+        <button class="primary" id="btnGen">✨ 生成專屬 AI 命題指令 (完整列表版)</button>
       </div>
     </div>
 
     <div class="card">
       <div class="hd"><b>📝 產出的高質量 Prompt</b></div>
       <div class="bd">
-        <textarea id="output" placeholder="v7.0 更新說明：&#10;除了保留前版所有功能，此版本已植入「108課綱素養」最高指令。&#10;強制要求題目與講義必須結合「生活情境」與「跨領域連結」，不再死背死記！"></textarea>
+        <textarea id="output" placeholder="v7.3 更新說明：&#10;針對「重點整理」加入強制展開指令。&#10;當內容提到「十大建設」、「五大洲」等集合名詞時，系統將強制列出完整表格，不再只寫總稱！"></textarea>
         <button id="btnCopy" style="width:100%; margin-top:12px;">📋 一鍵複製指令</button>
       </div>
     </div>
@@ -207,7 +207,7 @@
   $("btnAddQuiz").onclick = () => makeBlock(false);
   $("btnAddSum").onclick = () => makeBlock(true);
 
-  // --- 核心：究極專業 Prompt 生成引擎 (v7.0 素養完全體) ---
+  // --- 核心：究極專業 Prompt 生成引擎 (v7.3 列表展開版) ---
   $("btnGen").onclick = () => {
     const grade = $("grade").value;
     const diff = $("difficulty").value;
@@ -219,7 +219,13 @@
     
     // --- ★ v7.0 新增：108課綱素養最高指導原則 ---
     p += `# 命題最高指導原則：嚴格遵守「台灣 108 課綱核心素養」。所有內容須強調「生活情境應用 (Contextualizing)」與「跨領域連結」，嚴禁死背硬記。\n`;
-    p += `# 內容份量：必須「豐富詳盡 (High Volume)」。請製作「教師用詳解版」，需深入解析。\n\n`;
+    
+    // --- ★ v7.2 新增：內容暴力擴充指令 ---
+    p += `# 內容份量要求：必須產出「教科書等級」的詳盡內容 (Textbook Level Depth)。\n`;
+    p += `# 嚴禁偷懶：請勿僅以精簡條列式帶過。每一個核心概念都必須包含「定義」、「原理/背景」、「生活舉例」、「延伸補充」四個層次。\n`;
+
+    // --- ★ v7.3 新增：集合名詞強制展開指令 (您要的功能！) ---
+    p += `# 集合名詞展開原則：若內容提及具體群組（如：十大建設、五大洲、消化器官），嚴禁只寫總稱。必須「完整列出所有細項」並優先製作成「Markdown 表格」。\n\n`;
 
     // --- 分科專業指令 (總體要求) ---
     let subPrompt = "";
@@ -247,7 +253,7 @@
       let personInstruct = "";
       if (type.includes("重要人物誌")) {
           if (currentSub === "社會") {
-              personInstruct = `\n- 【歷史人物規格(詳盡版)】：姓名、所屬朝代/時期、關鍵事蹟(3項)、歷史評價/影響、相關傳說/軼聞。`;
+              personInstruct = `\n- 【歷史人物規格(詳盡版)】：姓名、所屬朝代/時期、關鍵事蹟(至少3項詳述)、歷史評價/影響、相關傳說/軼聞。`;
           } else if (currentSub === "自然") {
               personInstruct = `\n- 【科學家規格(詳盡版)】：姓名、重要發現/發明、科學實驗過程簡述、對後世的影響、科學精神。`;
           } else if (currentSub === "國語") {
@@ -259,23 +265,23 @@
         if (type.includes("重要人物誌")) {
             p += `### 📚 人物專題整理 (詳盡版)：${unit}\n- 形式：結構化人物資料卡或閱讀讀本。\n${personInstruct}\n\n`;
         } else {
-            // --- ★ v7.0 修正：講義結構加入「生活連結」 ---
+            // --- ★ v7.2 修正：講義結構細節要求 (加入「詳盡」關鍵字) ---
             let sumStruct = "";
             if(currentSub === "社會") {
-                // 社會科：加入「古今連結與生活啟示」
-                sumStruct = `1. **單元心智圖架構** (條列式)\n   2. **核心名詞與關鍵字詳解**\n   3. **歷史背景與時序引導**\n   4. **大事年表表格** (含年代/事件/影響)\n   5. **📜 歷史小故事/傳說軼聞**\n   6. **政治/經濟/社會/文化 四面向分析**\n   7. **古今連結與現代生活啟示** (生活素養)\n   8. **地圖與空間觀念解析**`;
+                // 社會科：加入「完整敘述」要求
+                sumStruct = `1. **單元心智圖架構** (條列式)\n   2. **核心名詞與關鍵字詳解** (解釋須詳盡，不可過簡)\n   3. **歷史背景與時序引導**\n   4. **大事年表表格** (含年代/事件/影響)\n   5. **📜 歷史小故事/傳說軼聞** (★需完整敘述起承轉合，不可僅一句話帶過)\n   6. **政治/經濟/社會/文化 四面向分析** (深度分析)\n   7. **古今連結與現代生活啟示** (生活素養)\n   8. **地圖與空間觀念解析**`;
             } else if(currentSub === "自然") {
-                // 自然科：加入「生活實例與應用」
-                sumStruct = `1. **核心名詞定義與原理**\n   2. **生活中的科學現象與應用實例** (生活素養)\n   3. **實驗設計** (標註變因/步驟/器材)\n   4. **專屬分類對照表** (Markdown)\n   5. **記憶口訣**\n   6. **延伸科學知識**`;
+                // 自然科：加入「原理詳解」要求
+                sumStruct = `1. **核心名詞定義與原理** (需詳細解釋 How & Why)\n   2. **生活中的科學現象與應用實例** (生活素養)\n   3. **實驗設計** (標註變因/步驟/器材)\n   4. **專屬分類對照表** (Markdown)\n   5. **記憶口訣**\n   6. **延伸科學知識** (補充)`;
             } else if(currentSub === "國語") {
-                sumStruct = `1. **本課形音義辨析** (易錯字/多音字)\n   2. **成語典故、釋義與生活應用造句**\n   3. **修辭技巧解析**\n   4. **課文文意深究與主旨**\n   5. **作者生平與背景**`;
+                sumStruct = `1. **本課形音義辨析** (易錯字/多音字)\n   2. **成語典故、釋義與生活應用造句** (需附情境)\n   3. **修辭技巧解析** (需附原句分析)\n   4. **課文文意深究與主旨**\n   5. **作者生平與背景**`;
             } else if(currentSub === "數學") {
                  sumStruct = `1. **單元核心概念**\n   2. **生活中的數學應用舉例**\n   3. **重要公式與原理推導**\n   4. **解題 S.O.P. 流程**\n   5. **易錯題型與迷思澄清**`;
             } else {
                 sumStruct = `核心概念導讀 -> 生活情境應用 -> 重點歸納 -> 易混淆點解析 -> 應用範例`;
             }
 
-            p += `### 📚 重點整理講義 (詳盡版)：${unit}\n- 結構要求：請嚴格依照此順序撰寫，並強調生活連結：\n${sumStruct}。\n\n`;
+            p += `### 📚 教師專用詳盡備課手冊：${unit}\n- 結構要求：請嚴格依照此順序撰寫，內容必須詳盡完整，嚴禁偷懶。遇集合名詞(如十大建設)須列表展開：\n${sumStruct}。\n\n`;
         }
       } else {
         const cnt = b.querySelector(".b-cnt").value;
